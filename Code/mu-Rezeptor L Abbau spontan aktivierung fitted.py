@@ -29,9 +29,8 @@ N=500 # no of MC runs
 # CaOn                   9
 # CaOff                  10
 
-# k_on(5.5)=0.029996 ; k_on(6.5)=0.023206 ; k_on(7.4)=0.0057036
 for run in range(1):
-    for k_on,ca in np.array([[0.0058876,5],[0.00173472,5]]):#[0.00059333,0],[0.001461155,0].iu[0.0001,0],[0.00100744,0], [0.00191487,0], [0.00282231,0], [0.00372975,0], [0.00463719,0],[0.00554463,0], [0.00645206,0], [0.0073595,0],,[0.001,5],[0.0001,5],[0.0020,5],[0.02202556,5], [0.01767812,5], [0.01333068,5], [0.00898324,5],[0.0046358,5],
+    for k_on,ca in np.array([[0.0058876,5],[0.00173472,5]]):#[0.00059333,0],[0.001461155,0].iu[0.0001,0],[0.00100744,0], [0.00191487,0], [0.00282231,0], [0.00372975,0], [0.00463719,0],[0.00554463,0], [0.00645206,0], [0.0073595,0],[0.001,5],[0.0001,5],[0.0020,5],[0.02202556,5], [0.01767812,5], [0.01333068,5], [0.00898324,5],[0.0046358,5],
             A=-np.ones((1,S+R+1,N)) # extra-columns to store reaction counts (Rea_1=A[:,S], Rea_2=A[:,S+1],..., Rea_R=A[:,S+R],...) and reaction time points
                     
             k1=k_on       # Rea_1:L+R->RL, Rea_2:R->RL      
@@ -163,14 +162,14 @@ for run in range(1):
                         A[i+1,S+10,n]=A[i,S+10,n]+1
                     i=i+1
                     
-            np.save(f'A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/trajectories/Ligand Abbau spontan Aktivierung/trajk3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runs{run}fitted',A)
+            np.save(f'A:/trajk3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runs{run}fitted',A)
 
 #%% calculate means, variances of 500 runs
 
 t=np.linspace(0,T,121)
 #%%
 for k_on in np.array([0.0058876,0.00173472]): #0.00059333,0.001461155[0.0001,0.00100744,0.00191487,0.00282231,0.00372975,0.00463719,0.00554463,0.00645206,0.0073595],0.0028134,0.0021684,0.00017922,0.0073595,0.0001,0.002,0.001,0.02202556, 0.01767812, 0.01333068, 0.00898324,0.0046358,  0.0057292,0.0039493,0.026373,0.00028836
-    D=np.load(f'A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/trajectories//Ligand Abbau spontan Aktivierung/trajk3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runs0fitted.npy')    
+    D=np.load(f'A:/trajk3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runs0fitted.npy')    
     C=np.zeros((11,np.size(t)))
     B=np.zeros((11,np.size(t)))
     
@@ -181,19 +180,19 @@ for k_on in np.array([0.0058876,0.00173472]): #0.00059333,0.001461155[0.0001,0.0
                 a[n]=D[max(np.where(np.logical_and(0<=D[:,22,n],D[:,22,n]<=t[tstep]))[0]),k,n]
             B[k,tstep]=np.mean(a)
             C[k,tstep]=np.var(a)   
-    np.save(f'A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/means/Ligand Abbau spontan Aktivierung/Exk3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runsfitted',B)
-    np.save(f'A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/variances/Ligand Abbau spontan Aktivierung/Vark3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runsfitted',C)
+    np.save(f'A:/Exk3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runsfitted',B)
+    np.save(f'A:/Vark3=0.2k2=0.01k7=0.001k11=0.00005k1={k_on}500runsfitted',C)
     
 #%% k_11 constant
-E1=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/variances/Ligand Abbau spontan Aktivierung/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.0028134500runsfitted.npy')
-E2=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/variances/Ligand Abbau spontan Aktivierung/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.0021684500runsfitted.npy')
-E3=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/variances/Ligand Abbau spontan Aktivierung/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.00017922500runsfitted.npy')
-E4=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/variances/Ligand Abbau spontan Aktivierung/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.0073595500runsfitted.npy')
+E1=np.load('A:/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.0028134500runsfitted.npy')
+E2=np.load('A:/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.0021684500runsfitted.npy')
+E3=np.load('A:/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.00017922500runsfitted.npy')
+E4=np.load('A:/Vark3=0.2k2=0.01k7=0.001k11=0k1=0.0073595500runsfitted.npy')
 
-B1=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/means/Ligand Abbau spontan Aktivierung/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.0028134500runsfitted.npy')#
-B2=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/means/Ligand Abbau spontan Aktivierung/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.0021684500runsfitted.npy')
-B3=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/means/Ligand Abbau spontan Aktivierung/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.00017922500runsfitted.npy')
-B4=np.load('A:/Mathe/Promo/Fock RD/Gillespie Algorithmus/means/Ligand Abbau spontan Aktivierung/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.0073595500runsfitted.npy')
+B1=np.load('A:/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.0028134500runsfitted.npy')#
+B2=np.load('A:/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.0021684500runsfitted.npy')
+B3=np.load('A:/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.00017922500runsfitted.npy')
+B4=np.load('A:/Exk3=0.2k2=0.01k7=0.001k11=0k1=0.0073595500runsfitted.npy')
 
 D1=np.zeros((S,np.size(t)))
 D2=np.zeros((S,np.size(t)))
